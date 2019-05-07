@@ -1,7 +1,6 @@
 # Build arguments
-ARG IMAGE=webdevops/php-nginx-dev:alpine-php7
-ARG APP_PATH=.
-FROM ${IMAGE}
+ONBUILD ARG APP_PATH=.
+FROM webdevops/php-nginx-dev:alpine-php7
 
 # TimeZone
 RUN apk add --no-cache tzdata
@@ -13,3 +12,9 @@ RUN apk add --no-cache --upgrade php7-memcached
 
 # Add prestissimo
 RUN composer global require "hirak/prestissimo"
+
+# Add the source
+ONBUILD ADD --chown=application ${APP_PATH} /app
+
+# Set the working directory
+ONBUILD WORKDIR /app

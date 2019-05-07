@@ -1,7 +1,6 @@
 # Build arguments
-ARG IMAGE=webdevops/php-nginx:alpine-php7
-ARG APP_PATH=.
-FROM ${IMAGE}
+ONBUILD ARG APP_PATH=.
+FROM webdevops/php-nginx:alpine-php7
 
 # TimeZone
 RUN apk add --no-cache tzdata
@@ -14,5 +13,8 @@ RUN apk add --no-cache --upgrade php7-memcached
 # Add prestissimo
 RUN composer global require "hirak/prestissimo"
 
-# https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.validate-timestamps
-RUN echo opcache.validate_timestamps = 0 >> /opt/docker/etc/php/php.ini
+# Add the source
+ONBUILD ADD --chown=application ${APP_PATH} /app
+
+# Set the working directory
+ONBUILD WORKDIR /app
