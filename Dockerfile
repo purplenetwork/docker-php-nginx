@@ -1,5 +1,4 @@
 # Build arguments
-ONBUILD ARG APP_PATH=.
 FROM webdevops/php-nginx:alpine-php7
 
 # TimeZone
@@ -14,6 +13,8 @@ RUN apk add --no-cache --upgrade php7-memcached
 RUN composer global require "hirak/prestissimo"
 
 # Add the source
+ONBUILD ARG APP_PATH=.
+ONBUILD ADD ${APP_PATH} /app
 ONBUILD ADD --chown=application ${APP_PATH} /app
 
 # Set the working directory
