@@ -1,6 +1,5 @@
 # Build arguments
 FROM webdevops/php-nginx-dev:alpine-php7
-ONBUILD ARG APP_PATH=.
 
 # TimeZone
 RUN apk add --no-cache tzdata
