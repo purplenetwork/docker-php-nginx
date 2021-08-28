@@ -1,5 +1,5 @@
 # Build arguments
-FROM webdevops/php-nginx:alpine-php7
+FROM webdevops/php-nginx:7.4-alpine
 
 # TimeZone
 RUN apk add --no-cache tzdata
